@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - King David & Sons Appliances</title>
+    <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="container">
+            <h1>📦 Admin Dashboard</h1>
+            <p class="subtitle">Manage your products</p>
+        </div>
+    </header>
+
+    <!-- Notification -->
+    <div id="notification" class="notification hidden">
+        <span id="notificationMessage"></span>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Controls Section -->
+        <section class="controls-section">
+            <button id="addProductBtn" class="btn btn-primary">
+                <span class="btn-icon">➕</span> Add New Product
+            </button>
+
+            <div class="filters">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search products..." 
+                    class="search-input"
+                >
+                
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="available">Available</option>
+                    <option value="sold">Sold</option>
+                    <option value="new">New Stock</option>
+                </select>
+
+                <select id="categoryFilter" class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="kitchen">Kitchen</option>
+                    <option value="cooling">Cooling</option>
+                    <option value="cleaning">Cleaning</option>
+                    <option value="laundry">Laundry</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="totalProducts">0</div>
+                    <div class="stat-label">Total Products</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="availableProducts">0</div>
+                    <div class="stat-label">Available</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🆕</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="newProducts">0</div>
+                    <div class="stat-label">New Stock</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="soldProducts">0</div>
+                    <div class="stat-label">Sold</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section class="products-section">
+            <h2>Products</h2>
+            <div id="productsGrid" class="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+            <div id="emptyState" class="empty-state hidden">
+                <p>📦 No products found. Add your first product to get started!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Product Form Modal -->
+    <div id="productModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Product</h2>
+                <button id="closeModal" class="close-btn">✕</button>
+            </div>
+
+            <form id="productForm" class="product-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productTitle">Product Title *</label>
+                        <input 
+                            type="text" 
+                            id="productTitle" 
+                            required 
+                            placeholder="e.g., Samsung Refrigerator"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice">Price (R) *</label>
+                        <input 
+                            type="text" 
+                            id="productPrice" 
+                            required 
+                            placeholder="e.g., 16,499"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription">Description *</label>
+                    <textarea 
+                        id="productDescription" 
+                        required 
+                        rows="3"
+                        placeholder="Product description..."
+                    ></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productCategory">Category *</label>
+                        <select id="productCategory" required>
+                            <option value="kitchen">Kitchen</option>
+                            <option value="cooling">Cooling</option>
+                            <option value="cleaning">Cleaning</option>
+                            <option value="laundry">Laundry</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productQuantity">Quantity *</label>
+                        <input 
+                            type="number" 
+                            id="productQuantity" 
+                            required 
+                            min="0"
+                            value="1"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productStatus">Status *</label>
+                        <select id="productStatus" required>
+                            <option value="available">Available</option>
+                            <option value="sold">Sold</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="productIsNew">
+                        <span>Mark as New Stock 🆕</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="productImage">Product Image *</label>
+                    <input 
+                        type="file" 
+                        id="productImage" 
+                        accept="image/*"
+                        class="file-input"
+                    >
+                    <div id="imagePreview" class="image-preview hidden">
+                        <img id="previewImg" src="" alt="Preview">
+                        <button type="button" id="removeImage" class="remove-image-btn">Remove Image</button>
+                    </div>
+                    <p class="help-text">Supported: JPG, PNG, HEIC (max 5MB, auto-compressed)</p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-icon">💾</span> Save Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="./js/admin.js"></script>
+</body>
+</html>
